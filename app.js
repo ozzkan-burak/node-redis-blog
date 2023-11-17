@@ -7,6 +7,7 @@ const app = express();
 const { engine } = expHand;
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
+app.use(require("./routes/index"));
 
 const connectDB = async () => {
   try {
@@ -21,10 +22,6 @@ const connectDB = async () => {
   }
 };
 connectDB();
-
-app.get("/", (req, res) => {
-  res.render("home");
-});
 
 const PORT = process.env.PORT;
 
