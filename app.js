@@ -22,6 +22,10 @@ const connectDB = async () => {
 };
 connectDB();
 
+app.get("/", (req, res) => {
+  res.render("home");
+});
+
 const PORT = process.env.PORT;
 
 app.listen(PORT, () => console.log(`App is listening on port ${PORT}`));
