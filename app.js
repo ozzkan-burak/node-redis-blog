@@ -1,8 +1,15 @@
 const express = require('express');
+const engine = require('express-handlebars').engine;
 //const bodyParser = require('body-parser');
 //const cors = require('cors');
 require('dotenv').config({ path: './config/.env' });
+
 const app = express();
+require('./config/db')(); // Assuming db.js is in the config folder
+app.engine('handlebars', engine());
+app.set('view engine', 'handlebars');
+app.set('views', './views');
+
 const port = process.env.PORT || 3001;
 
 // Middleware
@@ -11,7 +18,7 @@ const port = process.env.PORT || 3001;
 
 // Routes
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.render('home');
 });
 app.get('/api', (req, res) => {
   res.json({ message: 'Hello from the API!' });
