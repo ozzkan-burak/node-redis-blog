@@ -1,13 +1,26 @@
 const express = require('express');
-const engine = require('express-handlebars').engine;
+const expressHandlebars = require('express-handlebars');
 //const bodyParser = require('body-parser');
 //const cors = require('cors');
 require('dotenv').config({ path: './config/.env' });
 
 const app = express();
 require('./config/db')(); // Assuming db.js is in the config folder
-app.engine('handlebars', engine());
+
+const hbs = expressHandlebars.create({
+  // ...diğer ayarlar...
+  helpers: {
+    section: function (name, options) {
+      if (!this._sections) this._sections = {};
+      this._sections[name] = options.fn(this);
+      return null;
+    },
+  },
+});
+
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
+app.use(express.static('public')); // Serve static files from the 'public' directory
 app.set('views', './views');
 
 const port = process.env.PORT || 3001;
