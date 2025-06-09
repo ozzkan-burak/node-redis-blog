@@ -17,9 +17,7 @@ const port = process.env.PORT || 3001;
 //app.use(bodyParser.json());
 
 // Routes
-app.get('/', (req, res) => {
-  res.render('home');
-});
+app.use(require('./routes/index'));
 app.get('/api', (req, res) => {
   res.json({ message: 'Hello from the API!' });
 });
